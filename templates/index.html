@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Vendas das Bancas</title>
+    <link rel="stylesheet" href="..//static//style.css">
+</head>
+<body class="BodyTelaLogin">
+    
+    <header  class = "TituloTelaLogin">        
+        <h1>Sistema Gerenciador Mercado Central Sousa  </h1> 
+    </header>
+
+    <main>
+        <div class="CorpoTelaLogin">
+
+            <h2>Login</h2>
+            <form action="/fazerlogin" method="post">
+                <label for="nomeUsuario">Usuário</label>
+                <br> <br>
+
+                <input type="text" id="nomeUsuario" name="usuario" placeholder="Digite o seu Usuario" >
+                <br> <br>
+
+                <label for="passwordUsuario">Senha</label>
+                <br> <br>
+                
+                <input type="password" id="passwordLogin" name="senha" placeholder="Digite a sua senha">
+                <br> <br>
+
+                <select name="tipo">
+                    <option value="cliente">Cliente</option>
+                    <option value="vendedor">Vendedor</option>
+                </select>
+                <br>
+
+                <button class="EnviarTelaLogin" type="submit">Enviar</button>
+
+                <a class="msgerro">{{error}}</a>
+            </form>
+        </div>
+    </main>
+
+
+</body>
+</html>
