@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ListaUsuarios</title>
+    <link rel="stylesheet" href="..//static//style.css">
+</head>
+<body>
+    <header>
+        <h1>Usuários do Sistema</h1>
+</header>
+<main>
+    <h2 class="page-title">Lista de Usuários</h2>
+        <ul class="user-list">
+            {% for usuario in lista %}
+            <li class="user-item">
+                <span class="user-name">{{usuario[0]}}</span>
+                <span class="user-login">{{usuario[1]}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

@@ -11,7 +11,7 @@ def conectardb():
     )
     return con
 
-conectardb
+
 
 def login(user,senha):
     con = conectardb()
@@ -43,6 +43,9 @@ def inserir_user(nome, email, estado, profissao, senha):
     else:
         conn.commit()
         exito = True
+
+
+
 
     cur.close()
     conn.close()
