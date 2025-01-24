@@ -1,8 +1,6 @@
 from flask import *
 
-from DAO import dao
-
-
+import dao
 
 
 app = Flask(__name__)
