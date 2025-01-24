@@ -1,9 +1,13 @@
 from flask import *
 
+from DAO import dao
+
 
 
 
 app = Flask(__name__)
+
+app.secret_key = 'Khggj3h424j23JSMD@'
 
 
 @app.route('/', methods=['POST','GET'])
@@ -18,21 +22,28 @@ def fazer_login():
     saida = dao.login(login_user, senha_user)
 
     if len(saida) > 0:
+        session['login'] = login_user
         nome_user = saida[0][0]
         return render_template('home.html', nome=nome_user)
     else:
         return render_template('index.html')
 
 
-@app.route('/mostrar_cadastro')
-def mostrar_pag_cadastro():
-    return render_template('pagCadastro.html')
+@app.route('/logout' , methods=['POST' , 'GET'])
+def sair():
+    session.pop('login')
+    return render_template('index.html')
+    
 
-@app.route('/cadastrarusuario', methods=['POST'])
+
+
+
+@app.route('/cadastrarusuario', methods=['POST', 'GET'])
 def cadastrar_usuario():
     nome = request.form.get('nome')
     login = request.form.get('login')
     senha = request.form.get('senha')
+    
 
     if dao.inserir_user(nome, login, senha):
         msg= 'usuário inserido com sucesso'
@@ -41,17 +52,22 @@ def cadastrar_usuario():
         msg = 'Erro ao inserir usuário'
         return render_template('index.html', texto=msg)
 
+@app.route('/mostrar_cadastro')
+def mostrar_pag_cadastro():
+    return render_template('pagCadastro.html')
+
 
 @app.route('/listarusuarios')
 def listar_usuarios():
 
-    usuarios = dao.listar_usuarios()
-    print(usuarios)
-    return render_template('listarusuarios.html', lista=usuarios)   
+    if 'login' in session:
+        dao.listar_usuarios()
+        print(usuario)
+        return render_template('listarusuarios.html', lista=usuario)   
+    else:
+        return render_template('index.html')
 
-    
 
-    
         
 
 if __name__ == '__main__':

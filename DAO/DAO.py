@@ -30,17 +30,13 @@ def login(user,senha):
 
     return saida
 
-def inserir_user(nome, email, estado, profissao, senha):
+def inserir_user(nome, login, senha):
 
     conn = conectardb()
     cur = conn.cursor()
     try:
-        sql = f"INSERT INTO usuario (email, senha, nome, estado, profissao) VALUES ('{email}','{senha}','{nome}', '{estado}', '{profissao}' )"
+        sql = f"INSERT INTO usuario (nome, login, senha ) VALUES ('{nome}','{login}', '{senha}' )"
         cur.execute(sql)
-
-        sql2 = f"INSERT INTO carteira (email_usuario) VALUES('{email}')"
-        cur.execute(sql2)
-
 
     except psycopg2.IntegrityError:
         conn.rollback()
@@ -48,9 +44,6 @@ def inserir_user(nome, email, estado, profissao, senha):
     else:
         conn.commit()
         exito = True
-
-
-
 
     cur.close()
     conn.close()
