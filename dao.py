@@ -21,7 +21,7 @@ def conectardb():
 def login(user,senha):
     con = conectardb()
     cur = con.cursor()
-    sq = f"SELECT nome, estado, profissao, email from usuario where email='{user}' and senha='{senha}'  "
+    sq = f"SELECT login, nome from usuario where login='{user}' and senha='{senha}'  "
     cur.execute(sq)
     saida = cur.fetchall()
 
@@ -29,6 +29,7 @@ def login(user,senha):
     con.close()
 
     return saida
+
 
 def inserir_user(nome, login, senha):
 
@@ -44,6 +45,43 @@ def inserir_user(nome, login, senha):
     else:
         conn.commit()
         exito = True
+
+def cadastroProduto(nome_produto, preco, estoque):
+    con = conectardb()
+    cur = con.cursor()
+    try:
+        sql = f"SELECT * FROM produto WHERE nome_produto = '{nome_produto}'"
+        cur.execute(sql)
+        saida = cur.fetchall()
+    except Exception as e:
+        print(f"Erro ao consultar o produto: {e}")
+        saida = None
+    finally:
+        cur.close()
+        con.close()
+
+    return saida
+
+
+def inserirProduto(nome_produto, preco, estoque):
+   
+    conn = conectardb()
+    cur = conn.cursor()
+    try:
+        sql = f"INSERT INTO produto (nome_produto, preco, estoque) VALUES ('{nome_produto}', {preco}, {estoque})"
+        cur.execute(sql)
+        conn.commit()
+        print("Produto inserido com sucesso!")
+        return True
+    except Exception as e:
+        print(f"Erro ao inserir o produto: {e}")
+        return False
+    finally:
+        cur.close()
+        conn.close()
+
+
+        
 
     cur.close()
     conn.close()

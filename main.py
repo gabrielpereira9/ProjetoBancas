@@ -18,11 +18,11 @@ def fazer_login():
     login_user = request.form.get('login')
     senha_user = request.form.get('senha')
     saida = dao.login(login_user, senha_user)
-
+    print(saida)
     if len(saida) > 0:
         session['login'] = login_user
         nome_user = saida[0][0]
-        return render_template('home.html', nome=nome_user)
+        return render_template('pagPrincipalVendedores.html', nome=nome_user)
     else:
         return render_template('index.html')
 
@@ -32,7 +32,6 @@ def sair():
     session.pop('login')
     return render_template('index.html')
     
-
 
 
 
@@ -65,6 +64,17 @@ def listar_usuarios():
     else:
         return render_template('index.html')
 
+@app.route('/cadastrar_produto', methods=['POST', 'GET'])
+def cadastrar_produto():
+    nome_produto = request.form.get('nome_produto')
+    estoque = request.form.get('estoque')
+    preco = request.form.get('preco')
+    if dao.inserirProduto(nome_produto, preco, estoque):
+        msg = 'Produto inserido com sucesso'
+        return render_template('index.html', texto=msg)
+    else:
+        msg = 'Erro ao inserir produto'
+        return render_template('index.html', texto=msg)
 
         
 
