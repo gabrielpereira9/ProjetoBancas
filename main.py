@@ -62,15 +62,7 @@ def mostrar_pag_cadastro():
     return render_template('pagCadastro.html')
 
 
-@app.route('/listarusuarios')
-def listar_usuarios():
 
-    if 'login' in session:
-        dao.listar_usuarios()
-        print(usuario)
-        return render_template('listarusuarios.html', lista=usuario)   
-    else:
-        return render_template('index.html')
 
 @app.route('/cadastrar_produto', methods=['POST', 'GET'])
 def cadastrar_produto():

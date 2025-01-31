@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>login</title>
+    <link rel="stylesheet" href="..//static//style.css">
 </head>
 <body>
-    <main class = "mainPagProduto">
-             
-        <h2>Lista de produtos disponiveis</h2>
-            <ul class="produto-list" >
-                {% for produto in lista %}
-                <li class="produto-item">
-                    <span class="prod-nome_produto">{{produto[0]}}</span>
-                    <span class="prod-preco">{{produto[1]}}</span>
-                    <span class="prod-estoque">{{produto[2]}}</span>
-    
-                </li>
-                {% endfor %}
-            </ul>
-        </main>
-    
-        <form action="/logout"> 
-            <button>Sair</button>
-        </form>
+    <main class="mainPagProduto">
+        <h2>Lista de produtos disponíveis</h2>
+        <ul class="produto-list">
+            {% for produto in lista %}
+            <li class="produto-item">
+                <div class="prod-nome_produto">{{produto[0]}}</div>
+                <div class="prod-preco">
+                    <span class="label">Preço:</span> {{produto[1]}}
+                </div>
+                <div class="prod-estoque">
+                    <span class="label">Estoque:</span> {{produto[2]}}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <form action="/logout"> 
+        <button>Sair</button>
+    </form>
 </body>
 </html>

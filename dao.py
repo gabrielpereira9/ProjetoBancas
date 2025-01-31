@@ -88,7 +88,7 @@ def listar_produto():
     cur = conn.cursor()
     try:
         
-        cur.execute("SELECT nome_produto, preco, estoque FROM produtos")
+        cur.execute("SELECT nome_produto, preco, estoque FROM produto")
         produtos = cur.fetchall()
         return produtos
     except Exception as e:
