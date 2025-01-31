@@ -17,12 +17,18 @@ def pag_principal():
 def fazer_login():
     login_user = request.form.get('login')
     senha_user = request.form.get('senha')
-    saida = dao.login(login_user, senha_user)
-    print(saida)
+    tipo_user = request.form.get('tipo')
+    saida = dao.login(login_user, senha_user, tipo_user)
+
     if len(saida) > 0:
         session['login'] = login_user
         nome_user = saida[0][0]
-        return render_template('pagPrincipalVendedores.html', nome=nome_user)
+
+        if tipo_user == 'vendedor':
+            return render_template('pagPrincipalVendedores.html', nome=nome_user)
+        else:
+            return render_template('pagPrincipalClientes.html', nome=nome_user)
+        
     else:
         return render_template('index.html')
 
@@ -40,9 +46,11 @@ def cadastrar_usuario():
     nome = request.form.get('nome')
     login = request.form.get('login')
     senha = request.form.get('senha')
+    tipo = request.form.get('tipo')
     
+    print(nome, login, senha, tipo)
 
-    if dao.inserir_user(nome, login, senha):
+    if dao.inserir_user(nome, login, senha, tipo):
         msg= 'usuário inserido com sucesso'
         return render_template('index.html', texto=msg)
     else:
@@ -67,8 +75,8 @@ def listar_usuarios():
 @app.route('/cadastrar_produto', methods=['POST', 'GET'])
 def cadastrar_produto():
     nome_produto = request.form.get('nome_produto')
-    estoque = request.form.get('estoque')
-    preco = request.form.get('preco')
+    estoque = int(request.form.get('estoque'))
+    preco = float(request.form.get('preco'))
     if dao.inserirProduto(nome_produto, preco, estoque):
         msg = 'Produto inserido com sucesso'
         return render_template('index.html', texto=msg)
@@ -76,7 +84,17 @@ def cadastrar_produto():
         msg = 'Erro ao inserir produto'
         return render_template('index.html', texto=msg)
 
-        
+
+@app.route ('/listar_produto',  methods = ['GET'])
+def listar_produto():
+    if 'login' in session:
+        produtos = dao.listar_produto()
+        print(produtos)
+        return render_template('listarproduto.html', lista=produtos)   
+    else:
+        return render_template('index.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

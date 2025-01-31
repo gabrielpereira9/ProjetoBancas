@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main class = "mainPagProduto">
+             
+        <h2>Lista de produtos disponiveis</h2>
+            <ul class="produto-list" >
+                {% for produto in lista %}
+                <li class="produto-item">
+                    <span class="prod-nome_produto">{{produto[0]}}</span>
+                    <span class="prod-preco">{{produto[1]}}</span>
+                    <span class="prod-estoque">{{produto[2]}}</span>
+    
+                </li>
+                {% endfor %}
+            </ul>
+        </main>
+    
+        <form action="/logout"> 
+            <button>Sair</button>
+        </form>
+</body>
+</html>

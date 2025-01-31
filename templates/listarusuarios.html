@@ -1,31 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ListaUsuarios</title>
-    
+    <title>Lista de Produtos</title>
+
 </head>
 <body>
-    <header>
-        <h1>Usuários do Sistema</h1>
-</header>
-<main>
-    <h2>Lista de Usuários</h2>
-        <ul class="user-list">
-            {% for usuario in lista %}
-            <li class="user-item">
-                <span class="user-name">{{usuario[0]}}</span>
-                <span class="user-login">{{usuario[1]}}</span>
-            </li>
-            {% endfor %}
-        </ul>
-    </main>
 
-    <form action="/logout"> 
-        <button>Sair</button>
-    </form>
+<div class="listaProdutos">
+    <h1>Lista de Produtos</h1>
 
+    
+    {% if lista %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome do Produto</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for produto in lista %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ produto[0] }}</td>
+                        <td>R$ {{ "%.2f"|format(produto[1]) }}</td>
+                        <td>{{ produto[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum produto encontrado.</p>
+    {% endif %}
+
+        <a href="/" class="btn">Voltar para a página inicial</a>
+    </div>
+</div>
 
 </body>
 </html>

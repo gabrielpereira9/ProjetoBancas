@@ -18,10 +18,10 @@ def conectardb():
 
 
 
-def login(user,senha):
+def login(user,senha, tipo):
     con = conectardb()
     cur = con.cursor()
-    sq = f"SELECT login, nome from usuario where login='{user}' and senha='{senha}'  "
+    sq = f"SELECT login, nome from usuario where login='{user}' and senha='{senha}' and tipo='{tipo}'  "
     cur.execute(sq)
     saida = cur.fetchall()
 
@@ -31,12 +31,12 @@ def login(user,senha):
     return saida
 
 
-def inserir_user(nome, login, senha):
+def inserir_user(nome, login, senha, tipo):
 
     conn = conectardb()
     cur = conn.cursor()
     try:
-        sql = f"INSERT INTO usuario (nome, login, senha ) VALUES ('{nome}','{login}', '{senha}' )"
+        sql = f"INSERT INTO usuario (nome, login, senha, tipo ) VALUES ('{nome}','{login}', '{senha}', '{tipo}' )"
         cur.execute(sql)
 
     except psycopg2.IntegrityError:
@@ -78,10 +78,33 @@ def inserirProduto(nome_produto, preco, estoque):
         return False
     finally:
         cur.close()
-        conn.close()
+        conn.close()  
 
 
+
+
+def listar_produto():
+    conn = conectardb()  
+    cur = conn.cursor()
+    try:
         
+        cur.execute("SELECT nome_produto, preco, estoque FROM produtos")
+        produtos = cur.fetchall()
+        return produtos
+    except Exception as e:
+        print(f"Erro ao listar os produtos: {e}")
+        return []  
+    finally:
+        cur.close()
+        conn.close()  
+
+
+
+
+
+
+
+
 
     cur.close()
     conn.close()
